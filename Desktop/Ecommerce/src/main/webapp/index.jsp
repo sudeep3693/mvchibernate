@@ -1,6 +1,6 @@
 
 
-<%@page import="com.mycompany.mavenproject1.factoryProvider"%>
+<%@page import="com.mycompany.helper.factoryProvider"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,6 +12,8 @@
     </head>
     <body>
         <%@ include file="Reusable/bootstrap.jsp"%>
+        <% 
+            %>
         <h1>Creating session factory</h1>
         
         <%

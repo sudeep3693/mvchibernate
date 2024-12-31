@@ -1,5 +1,5 @@
 
-package com.mycompany.mavenproject1;
+package com.mycompany.helper;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

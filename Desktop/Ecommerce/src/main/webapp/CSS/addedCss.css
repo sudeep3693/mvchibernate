@@ -3,3 +3,11 @@ navbar-manual{
     float:right;
     
 }
+.custom-bg{
+    background-color: blue;
+}
+
+.backgroundLogin{
+    background-image: url("/IMG/loginbg.jpg");
+    background-repeat: none;
+}

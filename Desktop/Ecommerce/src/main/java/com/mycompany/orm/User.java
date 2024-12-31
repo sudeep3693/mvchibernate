@@ -9,24 +9,28 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.UniqueConstraint;
 @Entity
 public class User {
    @Id
            @GeneratedValue(strategy = GenerationType.IDENTITY)
     int userId;
     String userName;
+    
     String userEmail;
     String userPassword;
     long userPhone;
     String userPic;
     @Column(length = 1500)
     String userAddress;
+    @Column(length=10)
+    private String type;
 
     public User() {
         
     }
 
-    public User(int userId, String userName, String userEmail, String userPassword, long userPhone, String userPic, String userAddress) {
+    public User(int userId, String userName, String userEmail, String userPassword, long userPhone, String userPic, String userAddress, String type) {
         this.userId = userId;
         this.userName = userName;
         this.userEmail = userEmail;
@@ -34,15 +38,17 @@ public class User {
         this.userPhone = userPhone;
         this.userPic = userPic;
         this.userAddress = userAddress;
+        this.type=type;
     }
 
-    public User(String userName, String userEmail, String userPassword, long userPhone, String userPic, String userAddress) {
+    public User(String userName, String userEmail, String userPassword, long userPhone, String userPic, String userAddress,String type) {
         this.userName = userName;
         this.userEmail = userEmail;
         this.userPassword = userPassword;
         this.userPhone = userPhone;
         this.userPic = userPic;
         this.userAddress = userAddress;
+        this.type=type;
     }
 
     public int getUserId() {
@@ -106,6 +112,15 @@ public class User {
         return "User{" + "userId=" + userId + ", userName=" + userName + ", userEmail=" + userEmail + ", userPassword=" + userPassword + ", userPhone=" + userPhone + ", userPic=" + userPic + ", userAddress=" + userAddress + '}';
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    
    
     
     

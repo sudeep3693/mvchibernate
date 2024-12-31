@@ -12,10 +12,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Register</title>
     </head>
-    <body>
+    <body  style="background-image: url('IMG/loginbgg.jpg');
+          background-size: cover;
+          background-repeat: no-repeat;">
         <%@ include file="Reusable/navbar.jsp"%>
         <div class="container-fluid">
-            <div class="row mt-5">
+            <div class="row my-5">
                 <div class=" col-md-4 offset-md-4">
 
                     <div class="card px-3 py-2">

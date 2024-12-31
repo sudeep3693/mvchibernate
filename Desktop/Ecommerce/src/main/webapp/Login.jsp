@@ -12,20 +12,20 @@
         <title>Login Servlet</title>
         <%@include file="Reusable/bootstrap.jsp" %>
     </head>
-    <body style="background-image: url('IMG/loginbg.jpg');
+    <body style="background-image: url('IMG/loginbgg.jpg');
           background-size: cover;
           background-repeat: no-repeat;">
 
         <%@include file="Reusable/navbar.jsp" %>
         <div class="container">
             <div class="row">
-                <div class="col-md-4 offset-md-4 col-sm-10 offset-sm-1">
+                <div class="col-md-4 offset-md-4 col-sm-10 offset-sm-1 manualOpacity">
 
-                    <div class="card mt-3">  
+                    <div class="card mt-5">  
                         <div class="card-header text-center text-white bg-primary">
                             <h3>Login Here!!!</h3>
                         </div>
-                        <div class="card-body  opacity-50">
+                        <div class="card-body">
 
 
                             <form action="LoginServlet" method="post">

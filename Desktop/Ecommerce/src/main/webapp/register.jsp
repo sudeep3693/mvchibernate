@@ -12,7 +12,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Register</title>
     </head>
-    <body  style="background-image: url('IMG/loginbgg.jpg');
+    <body  style="background-image: url('IMG/registerbgg.webp');
           background-size: cover;
           background-repeat: no-repeat;">
         <%@ include file="Reusable/navbar.jsp"%>

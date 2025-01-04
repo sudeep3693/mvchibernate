@@ -4,12 +4,19 @@
  */
 package com.mycompany.servlets;
 
+import com.mycompany.dao.UserDao;
+import com.mycompany.helper.factoryProvider;
+import com.mycompany.orm.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.HashSet;
+import java.util.Set;
+import org.hibernate.SessionFactory;
 
 /**
  *
@@ -30,14 +37,35 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-
+            
             try {
-                out.println("sdafasdf");
-            } 
-            catch (Exception e) {
-                e.printStackTrace();
-            }
+                HttpSession session = request.getSession();
+                String uEmail = request.getParameter("uemail");
+                String uPassword = request.getParameter("pword");
 
+                UserDao udao = new UserDao(factoryProvider.getFactory());
+                User user = udao.getElementByEmailAndPassword(uEmail, uPassword);
+                if (user == null) {
+                    session.setAttribute("message","invalid user");
+                    response.sendRedirect("Login.jsp");
+                } else {
+                    
+                    session.setAttribute("current_user", user);
+
+                    if(user.getType().equals("normalUser")){
+                        response.sendRedirect("normal.jsp");
+                    }
+                    else {
+                        response.sendRedirect("admin.jsp");
+                    }
+                    
+                }
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+                out.println(e);
+            }
+            
         }
     }
 

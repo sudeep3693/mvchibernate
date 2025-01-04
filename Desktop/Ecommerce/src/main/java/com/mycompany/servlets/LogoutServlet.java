@@ -4,8 +4,6 @@
  */
 package com.mycompany.servlets;
 
-import com.mycompany.helper.factoryProvider;
-import com.mycompany.orm.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,14 +11,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 /**
  *
  * @author user
  */
-public class RegisterServlet extends HttpServlet {
+public class LogoutServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,38 +31,20 @@ public class RegisterServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
+           
             try{
+                HttpSession session  = request.getSession();
+                session.removeAttribute("current_user");
+                session.setAttribute("message","Logged out Successful");
                 
-                String username,email,password,address; 
-               
-                username = request.getParameter("user_name");
-                email = request.getParameter("user_email");
-                password = request.getParameter("user_password");
-                address = request.getParameter("user_address");
-                Long phone = Long.valueOf(request.getParameter("user_contact"));
+                response.sendRedirect("Login.jsp");
                 
-               User user = new User(username, email, password, phone, "defaul.jpg", address, "normalUser");
-                Session sc = factoryProvider.getFactory().openSession();
-                Transaction tx = sc.beginTransaction();
                 
-                int userid = (int)sc.save(user);
-                tx.commit();
-                sc.close();
-
-                HttpSession session = request.getSession();
-                session.setAttribute("message", username +", Registered Successful");
-                
-                response.sendRedirect("register.jsp");
-                return;
             }
             catch(Exception e)
-            {
-                
-                HttpSession session  = request.getSession();
-                session.setAttribute("message", "duplicate username or email");
-                response.sendRedirect("register.jsp");
-                return;
-            }
+                    {
+                       e.printStackTrace();
+                    }
         }
     }
 

@@ -3,7 +3,7 @@
     Created on : Dec 28, 2024, 11:20:03 AM
     Author     : user
 --%>
-
+<%@ page import="jakarta.servlet.*, jakarta.servlet.http.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="Reusable/bootstrap.jsp"%>
 <!DOCTYPE html>
@@ -14,7 +14,8 @@
     </head>
     <body  style="background-image: url('IMG/registerbgg.webp');
           background-size: cover;
-          background-repeat: no-repeat;">
+          background-repeat: no-repeat;
+          height:100vh;">
         <%@ include file="Reusable/navbar.jsp"%>
         <div class="container-fluid">
             <div class="row my-5">
@@ -39,33 +40,33 @@
                                 <div class="form-group row mt-3">
                                     <label for="inputText3" class="col-sm-4 col-form-label">Username</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="inputText3" name="user_name" placeholder="Username" style="required:required">
+                                        <input type="text" class="form-control" id="inputText3" name="user_name" placeholder="Username" required>
                                     </div>
                                 </div>
 
                                 <div class="form-group row mt-3">
                                     <label for="inputEmail3" class="col-sm-4 col-form-label">Email</label>
                                     <div class="col-sm-8">
-                                        <input type="email" class="form-control" name="user_email" id="inputEmail3" placeholder="Email" style="required:required">
+                                        <input type="email" class="form-control" name="user_email" id="inputEmail3" placeholder="Email" required>
                                     </div>
                                 </div>
                                 <div class="form-group row mt-3">
                                     <label for="inputPassword3" class="col-sm-4 col-form-label">Password</label>
                                     <div class="col-sm-8">
-                                        <input type="password" class="form-control" name="user_password" id="inputPassword3" placeholder="Password" style="required:required">
+                                        <input type="password" class="form-control" name="user_password" id="inputPassword3" placeholder="Password" required>
                                     </div>
                                 </div>
 
                                 <div class="form-group row mt-3">
                                     <label for="inputText3" class="col-sm-4 col-form-label">Phone NO</label>
                                     <div class="col-sm-8">
-                                        <input type="number" class="form-control" name="user_contact" id="inputText4" placeholder="Phone no" style="required:required">
+                                        <input type="number" class="form-control" name="user_contact" id="inputText4" placeholder="Phone no" required>
                                     </div>
                                 </div>
                                 <div class="form-group row mt-3">
                                     <label for="inputText3" class="col-sm-4 col-form-label">Address</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" name="user_address" id="inputText5" placeholder="Address" style="required:required">
+                                        <input type="text" class="form-control" name="user_address" id="inputText5" placeholder="Address" required>
                                     </div>
                                 </div>
                                 

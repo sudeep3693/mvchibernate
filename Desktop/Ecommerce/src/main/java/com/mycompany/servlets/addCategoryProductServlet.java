@@ -4,8 +4,9 @@
  */
 package com.mycompany.servlets;
 
+import com.mycompany.dao.CategoryDao;
 import com.mycompany.helper.factoryProvider;
-import com.mycompany.orm.User;
+import com.mycompany.orm.Category;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,14 +14,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
  * @author user
  */
-public class RegisterServlet extends HttpServlet {
+public class addCategoryProductServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,37 +36,39 @@ public class RegisterServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            try{
+            
+            String beh = request.getParameter("behaviour");
+            
+            if(beh.trim().equals("add-category"))
+            {
+                String categoryName = request.getParameter("category-name");
+                String categoryDetail = request.getParameter("category-detail");
+            
+            try {
+      
+              Category category = new Category(categoryName, categoryDetail);
+              
+                CategoryDao categoryDao = new CategoryDao(factoryProvider.getFactory());
+                int catid = categoryDao.insertCategory(category);
                 
-                String username,email,password,address; 
-               
-                username = request.getParameter("user_name");
-                email = request.getParameter("user_email");
-                password = request.getParameter("user_password");
-                address = request.getParameter("user_address");
-                Long phone = Long.valueOf(request.getParameter("user_contact"));
-                
-               User user = new User(username, email, password, phone, "defaul.jpg", address, "normalUser");
-                Session sc = factoryProvider.getFactory().openSession();
-                Transaction tx = sc.beginTransaction();
-                
-                int userid = (int)sc.save(user);
-                tx.commit();
-                sc.close();
-
-                HttpSession session = request.getSession();
-                session.setAttribute("message", username +", Registered Successful");
-                
-                response.sendRedirect("register.jsp");
-                return;
+                out.println(catid);
             }
             catch(Exception e)
             {
                 
-                HttpSession session  = request.getSession();
-                session.setAttribute("message", "duplicate username or email");
-                response.sendRedirect("register.jsp");
-                return;
+                HttpSession session = request.getSession();
+                session.setAttribute("message","Category "+categoryName +" already exists " );
+                
+                response.sendRedirect("admin.jsp");
+            }
+            }
+            
+            else if(beh.trim().equals("add-product")){
+                
+            }
+            
+            else{
+                out.println("cannot carryout operation");
             }
         }
     }

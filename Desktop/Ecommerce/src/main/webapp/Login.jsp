@@ -14,29 +14,33 @@
     </head>
     <body style="background-image: url('IMG/loginbgg.jpg');
           background-size: cover;
-          background-repeat: no-repeat;">
+          background-repeat: no-repeat;
+          height:100vh;">
 
         <%@include file="Reusable/navbar.jsp" %>
         <div class="container">
             <div class="row">
-                <div class="col-md-4 offset-md-4 col-sm-10 offset-sm-1 manualOpacity">
+                <div class="col-md-4 offset-md-4 manualOpacity">
 
-                    <div class="card mt-5">  
+                    <div class="card mt-5">
+                        
+                        
                         <div class="card-header text-center text-white bg-primary">
                             <h3>Login Here!!!</h3>
                         </div>
                         <div class="card-body">
 
+                        <%@include file="Reusable/message.jsp" %>
 
                             <form action="LoginServlet" method="post">
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Email address</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    <input type="email" name="uemail" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
                                     <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputPassword1" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1">
+                                    <input type="password" name="pword" class="form-control" id="exampleInputPassword1" required>
                                 </div>
                                 <div class="container text-center d-block mb-3">
                                     <a href="register.jsp" class="text-center">If not registered click here</a>

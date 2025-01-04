@@ -1,3 +1,5 @@
+
+<%@ page import="jakarta.servlet.*, jakarta.servlet.http.*" %>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
    <div class="container">
     <a class="navbar-brand" href="#">Dukan</a>
@@ -15,7 +17,12 @@
         
        
       </ul>
+        <%@page import="com.mycompany.orm.User" %>%>
+      <%   
+        User user1 = (User)session.getAttribute("current_user");
+        if(user1==null){
         
+        %>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
             <a class="nav-link" href="register.jsp">Register</a>
@@ -25,6 +32,24 @@
           <a class="nav-link" href="Login.jsp">Login</a>
         </li>
         </ul>
+        
+        <%
+          }
+          else
+    {
+      %>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+            <a class="nav-link" href="#!"><%=user1.getUserName()%></a>
+            </li>
+            
+              <li class="nav-item active">
+          <a class="nav-link" href="LogoutServlet">Logout</a>
+        </li>
+        </ul>
+        <%
+            }    
+        %>
   </div>
     </<div>
 </nav>

@@ -2,6 +2,8 @@
 package com.mycompany.dao;
 
 import com.mycompany.orm.Product;
+import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -20,10 +22,24 @@ public class ProductDao {
         Transaction tx = session.beginTransaction();
         
         pid = (int) session.save(product);
-        tx.commit();
+        tx.commit(); 
+        session.close();
+        return pid;  
+    }
+    
+    public int countProducts(){
+        int no=0;
+        Session s = factory.openSession();
         
+        Query q = s.createQuery("from Product");
         
-        return pid;
+        List <Product> list = q.list();
         
+        for(Product p: list){
+            no++;
+        }
+        
+        s.close();
+        return no;
     }
 }

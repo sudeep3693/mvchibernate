@@ -18,6 +18,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private int pid;
+    @Column(unique = true)
     private String pTitle;
     private String pDesc;
     private String pPhoto;

@@ -1,0 +1,19 @@
+
+.manualOpacity{
+    opacity:0.9;
+}
+
+.admin .card{
+    
+    border: 1px solid #673ab7;
+}
+
+.custom-bg{
+    background-color: #673ab7;
+}
+
+.admin .card:hover{
+    background-color:#e2e2e2;
+    transition: all .8s;
+    cursor:pointer;
+}

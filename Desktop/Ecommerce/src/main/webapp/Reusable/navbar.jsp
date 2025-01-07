@@ -39,10 +39,32 @@
     {
       %>
         <ul class="navbar-nav ml-auto">
+            
+            <%
+                if(user1.getType().equals("adminUser"))
+                {
+                %>
+            
             <li class="nav-item active">
-            <a class="nav-link" href="#!"><%=user1.getUserName()%></a>
+            <a class="nav-link" href="admin.jsp"><%=user1.getUserName()%></a>
             </li>
             
+            <%
+                }
+else{
+
+
+                %>
+             <li class="nav-item active">
+            <a class="nav-link" href="normal.jsp"><%=user1.getUserName()%></a>
+            </li>
+            
+            <%
+                
+                }
+                
+                %>
+
               <li class="nav-item active">
           <a class="nav-link" href="LogoutServlet">Logout</a>
         </li>

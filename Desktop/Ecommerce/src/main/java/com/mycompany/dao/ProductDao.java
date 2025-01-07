@@ -1,6 +1,7 @@
 
 package com.mycompany.dao;
 
+import com.mycompany.orm.Category;
 import com.mycompany.orm.Product;
 import java.util.List;
 import org.hibernate.Query;
@@ -35,11 +36,21 @@ public class ProductDao {
         
         List <Product> list = q.list();
         
-        for(Product p: list){
-            no++;
-        }
+            no = list.size();
         
         s.close();
         return no;
+    }
+    
+    public List<Product> getProducts(Category cat){
+        
+        Session s = factory.openSession();
+        
+        Query q = s.createQuery("from Product where category=:a");
+        q.setParameter("a", cat);
+        List <Product> list = q.list();
+         s.close();
+        return list;
+ 
     }
 }

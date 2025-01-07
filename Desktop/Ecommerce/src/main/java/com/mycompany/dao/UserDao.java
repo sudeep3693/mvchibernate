@@ -51,11 +51,7 @@ public class UserDao {
             Query q = session.createQuery("from User where type=:a");
                 q.setParameter("a", "normalUser");
             List <User> users = q.list();
-            
-            for(User c: users)
-            {
-                count++;
-            }
+            count = users.size();
              session.close();
         }
         catch(Exception e)

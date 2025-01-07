@@ -20,8 +20,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.File;
-import java.util.HashSet;
-import java.util.Set;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+
+
 
 /**
  *
@@ -87,30 +89,52 @@ public class addCategoryProductServlet extends HttpServlet {
                     p.setpDiscount(product_discount);
                     p.setpPhoto(part.getSubmittedFileName());
 
-                    //CategoryDao cao = new CategoryDao(factoryProvider.getFactory());
-                    //Category category = cao.getCategoryById(categoryid);
+                    CategoryDao cao = new CategoryDao(factoryProvider.getFactory());
+                    Category category = cao.getCategoryById(categoryid);
 
-                   // p.setCategory(category);
+                  p.setCategory(category);
                    
                   ServletContext cont = request.getServletContext();
-                  String path = cont.getRealPath("IMG")+ File.separator + "ProductImage"+ File.separator + part.getSubmittedFileName();
+                  String path = cont.getRealPath("IMG")+File.separator+"products"+File.separator+part.getSubmittedFileName();
                    
-                   out.println(path);
+                  try{
+                      
+                  FileOutputStream fos = new FileOutputStream(path);
+                  
+                  InputStream is = part.getInputStream();
+                  
+                  byte[] data = new byte[is.available()];
+                   is.read(data);
+
+//                  writing the data
+
+                fos.write(data);
+                
+                fos.close();
+                is.close();
+                  }
+                  catch(Exception e)
+                  {
+                      e.printStackTrace();
+                  }
+
+  
+        
 
 //                    insert into database using product dao
                         
                         ProductDao pdao = new ProductDao(factoryProvider.getFactory());
                         pdao.insertProduct(p);
                         
-//                        HttpSession session = request.getSession();
-//                        session.setAttribute("message","Product "+product_title+" is added successfully");
-//                        response.sendRedirect("admin.jsp");
+                      HttpSession session = request.getSession();
+                       session.setAttribute("message","Product "+product_title+" is added successfully");
+                        response.sendRedirect("admin.jsp");
                         
 
                     
                 } catch (Exception e) {
                         HttpSession session = request.getSession();
-                        session.setAttribute("message","Product "+product_title+" already exists");
+                        session.setAttribute("message","error here"+e);
                         response.sendRedirect("admin.jsp");
                 }
 

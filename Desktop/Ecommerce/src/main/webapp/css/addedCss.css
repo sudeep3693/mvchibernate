@@ -17,3 +17,8 @@
     transition: all .8s;
     cursor:pointer;
 }
+
+.custom-button{
+    background-color: #80f0e3;
+    
+}

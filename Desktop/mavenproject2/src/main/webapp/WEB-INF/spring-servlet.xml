@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+  https://www.springframework.org/schema/beans/spring-beans.xsd
+  http://www.springframework.org/schema/context
+  https://www.springframework.org/schema/context/spring-context.xsd
+  http://www.springframework.org/schema/util
+  https://www.springframework.org/schema/util/spring-util.xsd
+  http://www.springframework.org/schema/tx
+  https://www.springframework.org/schema/tx/spring-tx.xsd
+  http://www.springframework.org/schema/mvc
+  https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    
+    <mvc:annotation-driven/>
+    <context:component-scan base-package="com.springpracitce.controllers"/>
+    <context:component-scan base-package="com.springpracitce.dao"/>
+    <context:component-scan base-package="com.springpracitce.entity"/>
+    <context:component-scan base-package="com.springpracitce.services"/>
+    <context:annotation-config/>
+    <tx:annotation-driven/>
+    
+    <bean name="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".jsp"/>
+        
+    </bean>
+    
+
+   <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" name="ds">
+        
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3307/springmvc"/>
+        <property name="username" value="root"/>
+        <property name="password" value="Sudeep@369"/>
+    </bean>
+    
+    <bean class="org.springframework.orm.hibernate5.LocalSessionFactoryBean" name="sessionfactory">
+        <property name="hibernateProperties">
+            <props>
+                
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+            </props>
+        </property>
+        
+        <property name="annotatedClasses">
+            <list>
+                <value>com.springpracitce.entity.Student</value>
+               
+            </list>
+            
+            
+        </property>
+        <property name="dataSource" ref="ds"></property>
+        
+    </bean>
+    
+    
+    <bean class="org.springframework.orm.hibernate5.HibernateTemplate" name="hibernateTemp">
+        <property name="sessionFactory" ref="sessionfactory"></property>
+    </bean>
+    
+    
+    
+    <bean class="com.springpracitce.dao.StudentDao" name="studentDao">
+        
+        <property name="hibernateTemplate" ref = "hibernateTemp"></property>
+    </bean>
+    
+    
+   <bean class="org.springframework.orm.hibernate5.HibernateTransactionManager" name="transactionManager">
+       <property name="sessionFactory" ref="sessionfactory"></property>
+    </bean>
+</beans>

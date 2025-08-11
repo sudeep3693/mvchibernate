@@ -1,62 +1,68 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const nodemailer = require("nodemailer");
-const cors = require("cors");
-const crypto = require("crypto");
+import { Router } from 'express';
+import crypto from 'crypto';
+import nodemailer from 'nodemailer';
 
-const app = express();
-app.use(cors());
-app.use(bodyParser.json());
+const router = Router();
 
 let otpStore = {};
 
+// Configure Nodemailer
 const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-        user: "your_email@gmail.com",
-        pass: "your_gmail_app_password",
-    },
+  service: 'gmail',
+  auth: {
+    user: "sudeepsubedi72@gmail.com",
+    pass: "qddo oqkj cixq sgnk",
+  },
 });
 
-app.post("/send-otp", (req, res) => {
-    const { email } = req.body;
-    if (!email) return res.status(400).json({ message: "Email is required" });
+/**
+ * @route POST /otp/send
+ * @desc Send OTP to email
+ */
+router.post('/send', (req, res) => {
+  const { email } = req.body;
+  if (!email) return res.status(400).json({ message: 'Email is required' });
 
-    const otp = crypto.randomInt(100000, 999999).toString(); 
-    otpStore[email] = { otp, expiresAt: Date.now() + 5 * 60 * 1000 }; 
+  const otp = crypto.randomInt(100000, 999999).toString();
+  otpStore[email] = { otp, expiresAt: Date.now() + 5 * 60 * 1000 }; // expires in 5 mins
 
-    const mailOptions = {
-        from: "your_email@gmail.com",
-        to: email,
-        subject: "Your OTP Code",
-        text: `Your OTP code is ${otp}. It will expire in 5 minutes.`,
-    };
+  const mailOptions = {
+    from: process.env.GMAIL_USER,
+    to: email,
+    subject: 'Your OTP Code',
+    text: `Your OTP code is ${otp}. It will expire in 5 minutes.`,
+  };
 
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            console.error(error);
-            return res.status(500).json({ message: "Failed to send OTP" });
-        }
-        res.json({ message: "OTP sent successfully" });
-    });
+  transporter.sendMail(mailOptions, (error) => {
+    if (error) {
+      console.error('OTP Send Error:', error);
+      return res.status(500).json({ message: 'Failed to send OTP' });
+    }
+    res.json({ message: 'OTP sent successfully' });
+  });
 });
 
-app.post("/verify-otp", (req, res) => {
-    const { email, otp } = req.body;
+/**
+ * @route POST /otp/verify
+ * @desc Verify OTP
+ */
+router.post('/verify', (req, res) => {
+  const { email, otp } = req.body;
 
-    const stored = otpStore[email];
-    if (!stored) return res.status(400).json({ message: "OTP not found" });
+  const stored = otpStore[email];
+  if (!stored) return res.status(400).json({ message: 'OTP not found' });
 
-    if (Date.now() > stored.expiresAt) {
-        delete otpStore[email];
-        return res.status(400).json({ message: "OTP expired" });
-    }
-
-    if (stored.otp !== otp) {
-        return res.status(400).json({ message: "Invalid OTP" });
-    }
-
+  if (Date.now() > stored.expiresAt) {
     delete otpStore[email];
-    res.json({ message: "OTP verified successfully" });
+    return res.status(400).json({ message: 'OTP expired' });
+  }
+
+  if (stored.otp !== otp) {
+    return res.status(400).json({ message: 'Invalid OTP' });
+  }
+
+  delete otpStore[email];
+  res.json({ message: 'OTP verified successfully' });
 });
 
+export default router;
